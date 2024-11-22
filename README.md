@@ -62,22 +62,20 @@ A arquitetura consiste nos seguintes microsserviços:
     password: sua_senha
 3. Configurar o RabbitMQ em `src/main/resources/config/rabbitMQ/docker-compose.yml`:
    ```bash
-   services:
-     rabbitmq:
-       image: rabbitmq:3-management
-       container_name: rabbitmq
-       ports:
-         - "5672:5672"  # Porta para o protocolo AMQP
-         - "15672:15672" # Porta para a interface de gerenciamento
-       environment:
-         RABBITMQ_DEFAULT_USER: admin  # Usuário padrãol
-         RABBITMQ_DEFAULT_PASS: admin  # Senha padrão
-       volumes:
-         - rabbitmq_data:/var/lib/rabbitmq  # Persistência de dados
-         - rabbitmq_logs:/var/log/rabbitmq  # Persistência de logs
-   
-   volumes:
-     rabbitmq_data:
-     rabbitmq_logs:
-4.
-
+   spring:
+        rabbitmq:
+          image: rabbitmq:3-management
+          container_name: rabbitmq
+          ports:
+            - "5672:5672"  # Porta para o protocolo AMQP
+            - "15672:15672" # Porta para a interface de gerenciamento
+          environment:
+            RABBITMQ_DEFAULT_USER: admin  # Usuário padrãol
+            RABBITMQ_DEFAULT_PASS: admin  # Senha padrão
+          volumes:
+            - rabbitmq_data:/var/lib/rabbitmq  # Persistência de dados
+            - rabbitmq_logs:/var/log/rabbitmq  # Persistência de logs
+      
+      volumes:
+        rabbitmq_data:
+        rabbitmq_logs:
