@@ -11,18 +11,18 @@ Este projeto consiste em um conjunto de microsserviços para gerenciar o fluxo d
 
 A arquitetura consiste nos seguintes microsserviços:
 
-1. **Order Service**:
+1. **Order Service** `order`:
    - Recebe os pedidos via API REST.
    - Valida e salva os pedidos no banco de dados.
    - Envia mensagens para a fila `pedidos-pendentes`.
 
-2. **Sumarize Service**:
+2. **Sumarize Service** `order-sumarize-worker`:
    - Consome mensagens da fila `pedidos-pendentes`.
    - Calcula o valor total dos pedidos.
    - Atualiza o status para "processado".
    - Publica os pedidos processados na fila `pedidos-processados`.
 
-3. **Order Update Service**:
+3. **Order Update Service** `order-update-db`:
    - Consome mensagens da fila `pedidos-processados`.
    - Atualiza os pedidos no banco de dados em lote.
    - Garante resiliência com Dead Letter Queue (DLQ) em caso de falha.
@@ -54,5 +54,11 @@ A arquitetura consiste nos seguintes microsserviços:
    git clone https://github.com/eurival/ambev.git
    cd ambev
 2. Configure o banco de dados no arquivo application.yml:
-   
+   ```bash
+   spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orderdb
+    username: seu_usuario
+    password: sua_senha
+3. 
 
