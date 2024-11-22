@@ -14,10 +14,10 @@ A arquitetura consiste nos seguintes microsserviços:
 1. **Order Service**:
    - Recebe os pedidos via API REST.
    - Valida e salva os pedidos no banco de dados.
-   - Envia mensagens para a fila `pedidos-pending`.
+   - Envia mensagens para a fila `pedidos-pendentes`.
 
 2. **Sumarize Service**:
-   - Consome mensagens da fila `pedidos-pending`.
+   - Consome mensagens da fila `pedidos-pendentes`.
    - Calcula o valor total dos pedidos.
    - Atualiza o status para "processado".
    - Publica os pedidos processados na fila `pedidos-processados`.
