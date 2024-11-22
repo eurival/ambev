@@ -51,5 +51,8 @@ A arquitetura consiste nos seguintes microsserviços:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/order-processing-service.git
-   cd order-processing-service
+   git clone https://github.com/eurival/ambev.git
+   cd ambev
+2. Configure o banco de dados no arquivo application.yml:
+   
+
