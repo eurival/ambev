@@ -1,0 +1,21 @@
+
+{
+	"folders": [
+		{
+			"path": "order"
+		},
+		{
+			"path": "retry-worker"
+		},
+		{
+			"path": "order-sumarize-worker"
+		},
+		{
+			"path": "order-update-db"
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic",
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}
