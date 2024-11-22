@@ -1,4 +1,3 @@
-# ambev
 # **Order Processing Service**
 > Sistema de processamento de pedidos em microsserviços utilizando RabbitMQ e Spring Boot.
 
