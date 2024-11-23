@@ -5,6 +5,7 @@ server:
 
 spring:
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
       jdbc.time_zone: America/Sao_Paulo
@@ -25,9 +26,11 @@ spring:
     
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
-    
-springdoc:
-  api-docs:
-    path: /order-service/v3/api-docs
-  swagger-ui:
-    path: /order-service/swagger-ui
+management:
+  endpoint:
+    health:
+      show-details: always # Mostra os detalhes dos componentes no /health
+  endpoints:
+    web:
+      exposure:
+        include: health, info # Garante que /actuator/health está acessível  

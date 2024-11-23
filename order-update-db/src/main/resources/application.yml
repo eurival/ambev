@@ -24,10 +24,13 @@ spring:
     password: admin
     
   profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
+    active: ${SPRING_PROFILES_ACTIVE:docker}
     
-springdoc:
-  api-docs:
-    path: /order-update-db/v3/api-docs
-  swagger-ui:
-    path: /order-update-db/swagger-ui
+management:
+  endpoint:
+    health:
+      show-details: always # Mostra os detalhes dos componentes no /health
+  endpoints:
+    web:
+      exposure:
+        include: health, info # Garante que /actuator/health está acessível

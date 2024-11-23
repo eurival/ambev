@@ -13,7 +13,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-
+    public static final String PENDING_QUEUE = "pedidos-pendentes";
+    public static final String PENDING_ROUTING_KEY = "pedidos.pendentes";
     public static final String PROCESSED_QUEUE = "pedidos-processados";
     public static final String EXCHANGE_NAME = "pedidos.exchange";
     public static final String PROCESSED_ROUTING_KEY = "pedidos.processados";
@@ -29,6 +30,22 @@ public class RabbitMQConfig {
     public Queue criaFilhaPedidosProcessados() {
         return QueueBuilder.durable(PROCESSED_QUEUE).build();
     }
+    /**
+     * Declara a fila de pedidos pendentes.
+     */
+    @Bean
+    public Queue criaFilhaPedidosPendentes() {
+        return QueueBuilder.durable(PENDING_QUEUE).build();
+    }
+
+        /**
+     * Binding da fila de pedidos pendentes com a exchange.
+     */
+    @Bean
+    public Binding bindingPedidosPendentes(Queue criaFilhaPedidosPendentes, DirectExchange pedidosExchange) {
+        return BindingBuilder.bind(criaFilhaPedidosPendentes).to(pedidosExchange).with(PENDING_ROUTING_KEY);
+    }
+
 
     /**
      * Declara a exchange direta para gerenciar o roteamento de mensagens.

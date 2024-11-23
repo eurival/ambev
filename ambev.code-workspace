@@ -12,6 +12,9 @@
 		},
 		{
 			"path": "order-update-db"
+		},
+		{
+			"path": "teste-massivo"
 		}
 	],
 	"settings": {

@@ -68,8 +68,11 @@ public class OrderService {
             if (order.getItems() != null) {
                 order.getItems().forEach(item -> item.setOrder(order));
             }
-            orderRepository.save(order);
+            
+            Order orderSalva = orderRepository.save(order);
 
+            //atualiza o DTO com os dados persistidos no db
+            orderDTO = orderMapper.toDTO(orderSalva);
             // Tenta enviar para a fila de processamento
             try {
                 enviarPedidoParaFila(orderDTO);

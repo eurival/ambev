@@ -1,9 +1,9 @@
 package com.ambev.order.service.criteria;
 
-import com.ambev.order.domain.enumeration.OrderStatus;
-
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.ambev.order.domain.enumeration.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;

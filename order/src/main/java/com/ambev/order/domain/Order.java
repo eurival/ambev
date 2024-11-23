@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-
-
 import com.ambev.order.domain.enumeration.OrderStatus;
 
 import jakarta.persistence.CascadeType;
@@ -34,4 +32,9 @@ public class Order implements Serializable{
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
+
+
+
+
+    
 }

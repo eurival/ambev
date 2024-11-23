@@ -11,7 +11,8 @@ public class OpenApiConfig {
     public GroupedOpenApi orderApi() {
         return GroupedOpenApi.builder()
                 .group("orders")
-                .pathsToMatch("/orders/**")
+                .pathsToMatch("/order-service/orders/**") // Ajustado para incluir o context-path
                 .build();
     }
 }
+

@@ -5,12 +5,13 @@ FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
 # Copiar o arquivo JAR gerado pelo Maven para dentro do contêiner
-COPY target/order-0.0.1-SNAPSHOT.jar app.jar
+COPY target/order-update-db-0.0.1-SNAPSHOT.jar app.jar
 
-# Adicionar variáveis de ambiente para o Liquibase (opcional)
+# Adicionar variáveis de ambiente para Liquibase
 ENV DB_URL=jdbc:postgresql://postgres:5432/orderdb
 ENV DB_USERNAME=user
 ENV DB_PASSWORD=password
+
 
 # Comando para rodar o aplicativo Spring Boot
 ENTRYPOINT ["java", "-jar", "app.jar"]

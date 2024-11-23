@@ -1,0 +1,85 @@
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # Porta padrão para comunicação com o RabbitMQ
+      - "15672:15672" # Porta para o console de gerenciamento
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user01
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: orderdb
+    volumes:
+      - ./docker/postgres:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "user01", "-d", "orderdb", "-h", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  order-service:
+    build:
+      context: ./order
+    container_name: order-service
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderdb
+      SPRING_DATASOURCE_USERNAME: user01
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_RABBITMQ_HOST: rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/order-service/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sumarize-service:
+    build:
+      context: ./order-sumarize-worker
+    container_name: sumarize-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderdb
+      SPRING_DATASOURCE_USERNAME: user01
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_RABBITMQ_HOST: rabbitmq
+    #depends_on:
+     # order-service:
+      #  condition: service_healthy
+
+  update-service:
+    build:
+      context: ./order-update-db
+    container_name: update-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderdb
+      SPRING_DATASOURCE_USERNAME: user01
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_RABBITMQ_HOST: rabbitmq
+    #depends_on:
+     # order-service:
+      #  condition: service_healthy

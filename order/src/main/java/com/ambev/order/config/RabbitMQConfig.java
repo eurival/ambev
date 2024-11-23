@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     public static final String PENDING_QUEUE = "pedidos-pendentes";
-    public static final String EXCHANGE_NAME = "pedidos.exchange";
     public static final String PENDING_ROUTING_KEY = "pedidos.pendentes";
+    public static final String EXCHANGE_NAME = "pedidos.exchange";
     public static final String DUPLICATE_QUEUE = "pedidos-duplicados";
     public static final String DUPLICATE_ROUTING_KEY = "pedidos.duplicados";
     public static final String FAILURES_QUEUE = "pedidos-falhou";

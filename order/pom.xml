@@ -2,6 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<properties>
+		<java.version>17</java.version>
+		<version>3.3.6</version>
+		<liquibase.version>4.24.0</liquibase.version>
+		<spring-boot.version>3.3.5</spring-boot.version>
+		<org.mapstruct.version>1.6.3</org.mapstruct.version>
+		<validation-api.version>3.1.0</validation-api.version>
+	</properties>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -13,10 +23,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>order</name>
 	<description>Gerencia calcula produtos de pedidos</description>
-	<properties>
-		<java.version>17</java.version>
-		<org.mapstruct.version>1.6.3</org.mapstruct.version>
-	</properties>
+
 	<dependencies>
 		<!-- Spring Security -->
 		<dependency>
@@ -83,7 +90,6 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-		<!-- PostgreSQL Driver -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -91,12 +97,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Liquibase -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -118,14 +123,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Dependência do JPA -->
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
 
-		<!-- Processador de Anotações para gerar o Metamodelo -->
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
@@ -139,23 +142,6 @@
 			<version>2.2.0</version>
 		</dependency>
 
-		<!-- Remover o Springfox Swagger (Incompatível com Spring Boot 3.x) -->
-		<!-- Considere usar o SpringDoc OpenAPI em vez disso -->
-		<!--
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        -->
-		<!-- Adicionar o SpringDoc OpenAPI -->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.2.0</version>
-		</dependency>
-
-
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -165,7 +151,6 @@
 
 	<build>
 		<plugins>
-			<!-- Plugin do Maven Compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -201,18 +186,45 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!-- Plugin do Liquibase -->
 			<plugin>
 				<groupId>org.liquibase</groupId>
 				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>4.22.0</version>
+				<version>${liquibase.version}</version>
 				<configuration>
-					<changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
-					<url>jdbc:postgresql://135.181.250.34:15432/order</url>
-					<username>postgres</username>
-					<password>2dc61064f9916a420d53</password>
+					<changeLogFile>config/liquibase/master.xml</changeLogFile>
+					<diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
 					<driver>org.postgresql.Driver</driver>
+					<url>${liquibase-plugin.url}</url>
+					<defaultSchemaName/>
+					<username>${liquibase-plugin.username}</username>
+					<password>${liquibase-plugin.password}</password>
+					<referenceUrl>hibernate:spring:com.ambev.order.domain?dialect=org.hibernate.dialect.PostgreSQLDialect&amp;hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
+					<verbose>true</verbose>
+					<logging>debug</logging>
+					<contexts>!test</contexts>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-core</artifactId>
+						<version>${liquibase.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.liquibase.ext</groupId>
+						<artifactId>liquibase-hibernate6</artifactId>
+						<version>${liquibase.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-data-jpa</artifactId>
+						<version>${spring-boot.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>jakarta.validation</groupId>
+						<artifactId>jakarta.validation-api</artifactId>
+						<version>${validation-api.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

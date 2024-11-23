@@ -31,3 +31,11 @@ springdoc:
     path: /order-service/v3/api-docs
   swagger-ui:
     path: /order-service/swagger-ui
+management:
+  endpoint:
+    health:
+      show-details: always # Mostra os detalhes dos componentes no /health
+  endpoints:
+    web:
+      exposure:
+        include: health, info # Garante que /actuator/health está acessível

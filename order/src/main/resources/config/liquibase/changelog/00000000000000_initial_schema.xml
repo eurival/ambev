@@ -19,8 +19,17 @@
             <column name="integrado" type="BOOLEAN" defaultValueBoolean="true">
                 <constraints nullable="false"/>
             </column>
-
         </createTable>
+    </changeSet>
+
+    <!-- Índices para tbl_order -->
+    <changeSet id="00000000000000-1-idx" author="eurival">
+        <createIndex tableName="tbl_order" indexName="idx_tbl_order_status">
+            <column name="status"/>
+        </createIndex>
+        <createIndex tableName="tbl_order" indexName="idx_tbl_order_date">
+            <column name="order_date"/>
+        </createIndex>
     </changeSet>
 
     <!-- Criação da tabela tbl_order_item e chave estrangeira -->
@@ -39,6 +48,13 @@
             </column>
         </createTable>
         <addForeignKeyConstraint baseTableName="tbl_order_item" baseColumnNames="order_id" constraintName="fk_tbl_order_item_tbl_order" referencedTableName="tbl_order" referencedColumnNames="order_id" onDelete="CASCADE"/>
+    </changeSet>
+
+    <!-- Índice para tbl_order_item -->
+    <changeSet id="00000000000000-2-idx" author="eurival">
+        <createIndex tableName="tbl_order_item" indexName="idx_tbl_order_item_order_id">
+            <column name="order_id"/>
+        </createIndex>
     </changeSet>
 
     <!-- Criação da tabela tbl_role -->

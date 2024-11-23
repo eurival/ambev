@@ -32,9 +32,12 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 // Permitir acesso público a estas rotas
                 .requestMatchers(
-                    "/api/auth/**",                  // Autenticação
-                    "/order-service/swagger-ui/**",  // Swagger UI
-                    "/order-service/v3/api-docs/**"  // Documentação OpenAPI
+                    "/api/auth/**",               // Endpoints de autenticação
+                    "/swagger-ui/**",             // Swagger UI
+                    "/v3/api-docs/**",            // Documentação OpenAPI
+                    "/swagger-ui/**", // Rotas específicas do serviço (caso necessário)
+                    "/actuator/**",
+                    "/management/**"
                 ).permitAll()
                 // Proteger o restante das rotas
                 .anyRequest().authenticated()
@@ -43,7 +46,6 @@ public class SecurityConfig {
         return http.build();
     }
     
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

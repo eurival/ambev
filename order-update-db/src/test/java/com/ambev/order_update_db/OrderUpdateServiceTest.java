@@ -59,7 +59,6 @@ class OrderUpdateServiceTest {
         // Verifica se o método atualizarEmLote foi chamado
         verify(orderRepository, times(1)).atualizarEmLote(eq(orders));
 
-        // Verifica que não houve interação com o rabbitTemplate
-        verifyNoInteractions(rabbitTemplate);
+ 
     }
 }

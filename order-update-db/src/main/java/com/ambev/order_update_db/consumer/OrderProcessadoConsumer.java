@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.ambev.order_update_db.config.RabbitMQConfig;
 import com.ambev.order_update_db.service.OrderUpdateService;
 import com.ambev.order_update_db.service.dto.OrderDTO;
 
@@ -20,7 +21,7 @@ public class OrderProcessadoConsumer implements Serializable{
 
     private static final Logger logger = LoggerFactory.getLogger(OrderProcessadoConsumer.class);
     private final OrderUpdateService orderUpdateService;
-    private final BlockingQueue<OrderDTO> buffer = new LinkedBlockingQueue<>(1000); // Capacidade máxima
+    private final BlockingQueue<OrderDTO> buffer = new LinkedBlockingQueue<>(5000); // Capacidade máxima
     private final int BATCH_SIZE = 100; // Tamanho do lote
 
     public OrderProcessadoConsumer(OrderUpdateService orderUpdateService) {
@@ -43,7 +44,7 @@ public class OrderProcessadoConsumer implements Serializable{
         }
     }
 
-    @RabbitListener(queues = "pedidos-processados")
+    @RabbitListener(queues = RabbitMQConfig.PROCESSED_QUEUE)
     public void consumir(OrderDTO order) {
         logger.info("Adicionado ao buffer: {}", order.getOrderId());
         if (!buffer.offer(order)) { // Adiciona ao buffer, rejeitando se estiver cheio

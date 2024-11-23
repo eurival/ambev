@@ -1,10 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://135.181.250.34:15432/order
-    username: postgres
-    password: 2dc61064f9916a420d53
-  liquibase:
-    change-log: classpath:config/liquibase/master.xml
+    url: jdbc:postgresql://localhost:5432/orderdb
+    username: user01
+    password: password
 
 logging:
   level:

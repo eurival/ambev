@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class OrderItemDTO implements Serializable{
     private static final long serialVersionUID = 1L;
+    
     private Long id;
     @NotNull(message = "O ID do produto é obrigatório.")
     private String productId;
