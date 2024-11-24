@@ -48,28 +48,6 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-            /**
-     * {@code GET  /orders} : 
-     *
-     * @param pageable informação de paginação ex: /api/orders?sort=id&page=0&size=100
-     * @return o {@link ResponseEntity} com status {@code 200 (OK)} e a lista de order no body.
-     */
-
-    @Operation(summary = "Retorna todas as orders", description = "Retorna uma lista de ordens com opcional filtragem.")
-    @ApiResponse(responseCode = "200", description = "Orders retrieved successfully.")
-    @GetMapping
-    public ResponseEntity<List<OrderDTO>> getAllOrders(
-            @ParameterObject OrderCriteria criteria,
-            @ParameterObject Pageable pageable) {
-    
-        Page<OrderDTO> page = orderService.findAllOrders(criteria, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(
-                ServletUriComponentsBuilder.fromCurrentRequest(), page);
-    
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-    
-
-
+    // para visualizar as orders utilize o microservice order-viewer
     
 }

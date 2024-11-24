@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orderdb
+    username: user01
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5       # Número mínimo de conexões ociosas no pool
+      maximum-pool-size: 20 # Número máximo de conexões no pool
+      idle-timeout: 300000  # Tempo em milissegundos antes de uma conexão ociosa ser removida
+      max-lifetime: 1800000 # Tempo máximo de vida de uma conexão no pool (30 minutos)
+      connection-timeout: 30000 
+
+logging:
+  level:
+ 
+  
+    org.springframework.cache: DEBUG
+    com.hazelcast: DEBUG

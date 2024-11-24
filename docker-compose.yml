@@ -24,6 +24,7 @@ services:
       POSTGRES_USER: user01
       POSTGRES_PASSWORD: password
       POSTGRES_DB: orderdb
+ 
     volumes:
       - ./docker/postgres:/docker-entrypoint-initdb.d/
     healthcheck:
@@ -83,3 +84,23 @@ services:
     #depends_on:
      # order-service:
       #  condition: service_healthy
+  order-viewer:
+    build:
+      context: ./order-viewer
+    container_name: order-viewer
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderdb
+      SPRING_DATASOURCE_USERNAME: user01
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/order-viewer/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

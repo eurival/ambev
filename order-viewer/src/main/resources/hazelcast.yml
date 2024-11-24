@@ -1,0 +1,17 @@
+hazelcast:
+  instance-name: order-viewer-instance
+  network:
+    port: 5701
+    port-auto-increment: true
+    join:
+      multicast:
+        enabled: false
+      tcp-ip:
+        enabled: true
+        members:
+          - localhost:5701
+          - localhost:5702
+  map:
+    orders:
+      backup-count: 1
+      time-to-live-seconds: 600 # 10 minutos

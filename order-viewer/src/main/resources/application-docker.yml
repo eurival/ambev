@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgresql:5432/orderdb
+    username: user01
+    password: password
+ 
+logging:
+  level:
+    org.springframework.web: info

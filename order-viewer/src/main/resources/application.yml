@@ -1,0 +1,50 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /order-viewer
+
+spring:
+  cache:
+    type: hazelcast
+    hazelcast:
+      config: classpath:hazelcast.yaml # Se estiver usando hazelcast.yaml
+      # Ou configure diretamente aqui se estiver usando configuração Java
+      
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: your_redis_password_if_any
+      database: 0
+      timeout: 60000 # Tempo limite de conexão em milissegundos  
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+      jdbc.time_zone: America/Sao_Paulo
+      hibernate.timezone.default_storage: NORMALIZE
+      hibernate.type.preferred_instant_jdbc_type: TIMESTAMP
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+    
+springdoc:
+  api-docs:
+    path: /order-viewer/v3/api-docs
+  swagger-ui:
+    path: /order-viewer/swagger-ui
+management:
+  endpoint:
+    health:
+      show-details: always # Mostra os detalhes dos componentes no /health
+  endpoints:
+    web:
+      exposure:
+        include: health, info # Garante que /actuator/health está acessível
