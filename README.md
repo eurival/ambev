@@ -116,5 +116,8 @@ A arquitetura consiste nos seguintes microsserviços:
    Lista todas as orders
    Utilize filtro: http://localhost:8083/order-viewer/api/v1/orders?orderBy=2233
 ```
+
+
+---
 ## **Soluções para possiveis gargalos**
 Pode-se implementar cluster Kubernet, dos microserviços, utilizar loadbalance, autoscaling horizontal.
