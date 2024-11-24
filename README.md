@@ -120,4 +120,4 @@ A arquitetura consiste nos seguintes microsserviços:
 
 ---
 ## **Soluções para possiveis gargalos**
-Pode-se implementar cluster Kubernet, dos microserviços, utilizar loadbalance, autoscaling horizontal.
+Pode-se implementar cluster Kubernets, dos microserviços, utilizar loadbalance, autoscaling horizontal, Spring boot Cloud.
